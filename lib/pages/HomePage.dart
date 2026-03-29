@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:grocery_shop_app/model/CartModel.dart';
 import 'package:grocery_shop_app/Components/GroceryItemTile.dart';
+import 'package:grocery_shop_app/pages/CartPage.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -9,6 +10,14 @@ class HomePage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
       return Scaffold(
+        floatingActionButton: FloatingActionButton(
+          onPressed: () => Navigator.push(context, MaterialPageRoute(
+            builder: (context) {
+              return CartPage();
+            },
+          )),
+          child: Icon(Icons.shopping_bag),
+        ),
         body: SafeArea(
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
@@ -60,6 +69,9 @@ class HomePage extends StatelessWidget {
                           itemPrice: value.shopItems[index][1],
                           imagePath: value.shopItems[index][2],
                           color: value.shopItems[index][3],
+                          onPressed: () {
+                            Provider.of<cartModel>(context, listen: false).addItemToCart(index);
+                          } 
                         );
                       },
                     );
